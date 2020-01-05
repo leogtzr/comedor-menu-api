@@ -20,20 +20,11 @@ public class ComedorMenuApiApplication {
 		// Creating a Workbook from an Excel file (.xls or .xlsx)
 		final Workbook workbook = WorkbookFactory.create(new File(args[0]));
 
-		// final Sheet lastSheet = workbook.getSheetAt(workbook.getNumberOfSheets() - 3);
 		final Sheet lastSheet = workbook.getSheetAt(0);
 		System.out.println(lastSheet.getSheetName());
 
-		final DataFormatter dataFormatter = new DataFormatter();
-
-		// System.out.println(lastSheet.getRow(4).getCell(0));
-		System.out.println("Title index is: " + InputSheetFileRowIndexes.TITLE.get());
-
 		final int titleRowPosition = MenuUtils.titleTagPosition(lastSheet);
-		System.out.println("Title row pos: " + titleRowPosition);
 		InputSheetFileRowIndexes.TITLE.adjust(titleRowPosition);
-
-		System.out.println("Title index is now: " + InputSheetFileRowIndexes.TITLE.get());
 
 		final Menu menu = new Menu();
 		final String title = lastSheet.getRow(InputSheetFileRowIndexes.TITLE.get()).getCell(0).getStringCellValue();

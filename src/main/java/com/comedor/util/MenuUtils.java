@@ -16,8 +16,6 @@ public final class MenuUtils {
 
     private MenuUtils() {}
 
-    private static final DataFormatter dataFormatter = new DataFormatter();
-
     public static Optional<Food> extractMealInfoFromRow(
             final Row row,
             final DayColumnIndexes index,
@@ -32,14 +30,8 @@ public final class MenuUtils {
         }
         final Cell cellKCal = row.getCell(index.index() + 1);
 
-        try {
-            final int kCal = (int)cellKCal.getNumericCellValue();
-            food.setKCal(kCal);
-        } catch (final IllegalStateException ex) {
-            ex.printStackTrace();
-            System.out.println("Then ... [" + cellKCal.getStringCellValue() + "], for: " + index);
-        }
-
+        final int kCal = (int)cellKCal.getNumericCellValue();
+        food.setKCal(kCal);
         food.setMealType(mealType);
         food.setName(cellName.getStringCellValue());
 
