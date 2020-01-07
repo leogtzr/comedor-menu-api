@@ -45,7 +45,6 @@ class MenuUtilsTest {
 
         final File file = new File(path);
         String absolutePath = file.getAbsolutePath();
-
         final Workbook workbook = WorkbookFactory.create(new File(absolutePath));
         final Sheet sheet = workbook.getSheetAt(0);
 
@@ -57,6 +56,7 @@ class MenuUtilsTest {
 
         final Menu menu = sheetOpt.get();
         final DayMeal menuMonday = menu.getMenu().get(Day.LUNES);
+        Food mondayBreakfast = menuMonday.getBreakfast();
         final List<Food> lunchDinnerFoodAlternatives = menuMonday.getLunchDinnerFoodAlternatives();
         if (lunchDinnerFoodAlternatives == null || lunchDinnerFoodAlternatives.isEmpty()) {
             fail("lunch food alternatives should not be empty ... ");
