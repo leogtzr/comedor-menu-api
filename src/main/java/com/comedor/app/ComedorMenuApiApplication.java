@@ -23,7 +23,7 @@ public class ComedorMenuApiApplication {
 		final Sheet sheet = workbook.getSheetAt(0);
 
 		final Optional<Menu> menu = MenuUtils.extractMenuFromSheet(sheet);
-		System.out.println(menu);
+		// System.out.println(menu.);
 
 		workbook.close();
 

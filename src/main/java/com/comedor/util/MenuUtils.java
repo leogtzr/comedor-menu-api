@@ -117,6 +117,7 @@ public final class MenuUtils {
             final Row[] saladRows = {saladsRow1, saladsRow2, saladsRow3};
             final Optional<SaladBar> salads = MenuUtils.extractFromSaladsRow(saladRows, i);
 
+            breakFast.ifPresent(dayMeal::setBreakfast);
             option1.ifPresent(alternatives::add);
             option2.ifPresent(alternatives::add);
             antojito.ifPresent(alternatives::add);
@@ -127,7 +128,6 @@ public final class MenuUtils {
             light.ifPresent(alternatives::add);
 
             dayMeal.setLunchDinnerFoodAlternatives(alternatives);
-            breakFast.ifPresent(dayMeal::setBreakfast);
 
             salads.ifPresentOrElse(sl -> dayMeal.setSalads(sl.getSalads()), () -> dayMeal.setSalads(new ArrayList<>()));
 
