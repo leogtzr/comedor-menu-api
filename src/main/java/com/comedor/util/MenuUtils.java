@@ -10,6 +10,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 
 import java.util.*;
 
+import static java.util.stream.Collectors.*;
+
 public final class MenuUtils {
 
     private MenuUtils() {}
@@ -26,6 +28,7 @@ public final class MenuUtils {
         if (cellName == null || value.trim().isEmpty()) {
             return Optional.empty();
         }
+        // System.out.println("Value is: " + value);
         final Cell cellKCal = row.getCell(index.index() + 1);
 
         final int kCal = (int)cellKCal.getNumericCellValue();
@@ -117,9 +120,6 @@ public final class MenuUtils {
             final Optional<Food> dessert = MenuUtils.extractMealInfoFromRow(dessertRow, i, MealType.DESSERT);
             final Optional<Food> light = MenuUtils.extractMealInfoFromRow(lightRow, i, MealType.LIGHT);
 
-            final Row[] saladRows = {saladsRow1, saladsRow2, saladsRow3};
-            final Optional<SaladBar> salads = MenuUtils.extractFromSaladsRow(saladRows, i);
-
             breakFast.ifPresent(dayMeal::setBreakfast);
             option1.ifPresent(alternatives::add);
             option2.ifPresent(alternatives::add);
@@ -132,8 +132,10 @@ public final class MenuUtils {
 
             dayMeal.setLunchDinnerFoodAlternatives(alternatives);
 
-            salads.ifPresentOrElse(sl -> dayMeal.setSalads(sl.getSalads()), () -> dayMeal.setSalads(new ArrayList<>()));
+            final Row[] saladRows = {saladsRow1, saladsRow2, saladsRow3};
+            final Optional<SaladBar> salads = MenuUtils.extractFromSaladsRow(saladRows, i);
 
+            salads.ifPresentOrElse(sl -> dayMeal.setSalads(sl.getSalads()), () -> dayMeal.setSalads(new ArrayList<>()));
             dayMealMenu.put(i.day(), dayMeal);
         }
 
@@ -142,4 +144,39 @@ public final class MenuUtils {
         return Optional.of(menu);
     }
 
+    public static void foo(final Sheet sheet) {
+
+        final Optional<Integer> titleRowPosition = MenuUtils.titleTagPosition(sheet);
+        if (titleRowPosition.isEmpty()) {
+            System.err.println("Logo not found ... ");
+            return;
+        }
+
+        final InputSheetFileRowIndexes indexes = new InputSheetFileRowIndexes();
+        titleRowPosition.ifPresent(pos -> indexes.adjust(pos));
+
+        final Map<Day, List<Food>> map = new HashMap<>();
+
+        indexes.values().stream().filter(rix -> rix.getMealType() != MealType.TITLE).forEach(rix -> {
+            final Row r = sheet.getRow(rix.getIndex());
+            for (final DayColumnIndexes dayIndex : DayColumnIndexes.values()) {
+                if (rix.getMealType() == MealType.SALADS) {
+                    final Row r2 = sheet.getRow(rix.getIndex() + 1);
+                    final Row r3 = sheet.getRow(rix.getIndex() + 2);
+                    final Row[] saladRows = {r, r2, r3};
+                    final Optional<SaladBar> salads = MenuUtils.extractFromSaladsRow(saladRows, dayIndex);
+                    salads.ifPresent(sl ->
+                            map.computeIfAbsent(dayIndex.day(), k -> new ArrayList<>()).addAll(
+                                sl.getSalads().stream().map(salad -> new Food(salad, 0, MealType.SALADS)).collect(toList())
+                    ));
+                } else {
+                    MenuUtils.extractMealInfoFromRow(r, dayIndex, rix.getMealType())
+                            .ifPresent(f -> map.computeIfAbsent(dayIndex.day(), k -> new ArrayList<>()).add(f));
+                }
+            }
+        });
+
+        System.out.println(map.get(Day.DOMINGO));
+
+    }
 }

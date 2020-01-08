@@ -1,7 +1,9 @@
 package com.comedor.input.sheet;
 
 import com.comedor.menu.Day;
+import lombok.ToString;
 
+@ToString
 public enum DayColumnIndexes {
     LUNES(2, Day.LUNES),
     MARTES(4, Day.MARTES),
