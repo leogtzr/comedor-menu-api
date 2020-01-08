@@ -2,6 +2,7 @@ package com.comedor.util;
 
 import com.comedor.input.sheet.DayColumnIndexes;
 import com.comedor.input.sheet.InputSheetFileRowIndexes;
+import com.comedor.input.sheet.RowTypeIndex;
 import com.comedor.menu.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -83,22 +84,22 @@ public final class MenuUtils {
         titleRowPosition.ifPresent(pos -> indexes.adjust(pos));
 
         final Menu menu = new Menu();
-        final String title = sheet.getRow(indexes.title()).getCell(0).getStringCellValue();
+        final String title = sheet.getRow(indexes.title().getIndex()).getCell(0).getStringCellValue();
         menu.setTitle(title);
 
-        final Row breakFastRow = sheet.getRow(indexes.breakfast());
-        final Row mainRow1 = sheet.getRow(indexes.main1());
-        final Row mainRow2 = sheet.getRow(indexes.main2());
-        final Row antojitosRow = sheet.getRow(indexes.antojito());
-        final Row side1Row = sheet.getRow(indexes.side1());
-        final Row side2Row = sheet.getRow(indexes.side2());
-        final Row soupOrCreamRow = sheet.getRow(indexes.soupOrCream());
-        final Row dessertRow = sheet.getRow(indexes.dessert());
-        final Row lightRow = sheet.getRow(indexes.light());
+        final Row breakFastRow = sheet.getRow(indexes.breakfast().getIndex());
+        final Row mainRow1 = sheet.getRow(indexes.main1().getIndex());
+        final Row mainRow2 = sheet.getRow(indexes.main2().getIndex());
+        final Row antojitosRow = sheet.getRow(indexes.antojito().getIndex());
+        final Row side1Row = sheet.getRow(indexes.side1().getIndex());
+        final Row side2Row = sheet.getRow(indexes.side2().getIndex());
+        final Row soupOrCreamRow = sheet.getRow(indexes.soupOrCream().getIndex());
+        final Row dessertRow = sheet.getRow(indexes.dessert().getIndex());
+        final Row lightRow = sheet.getRow(indexes.light().getIndex());
 
-        final Row saladsRow1 = sheet.getRow(indexes.salads());
-        final Row saladsRow2 = sheet.getRow(indexes.salads() + 1);
-        final Row saladsRow3 = sheet.getRow(indexes.salads()+ 2);
+        final Row saladsRow1 = sheet.getRow(indexes.salads().getIndex());
+        final Row saladsRow2 = sheet.getRow(indexes.salads().getIndex() + 1);
+        final Row saladsRow3 = sheet.getRow(indexes.salads().getIndex()+ 2);
 
         final Map<Day, DayMeal> dayMealMenu = new HashMap<>();
 
@@ -107,13 +108,13 @@ public final class MenuUtils {
             final DayMeal dayMeal = new DayMeal();
 
             final Optional<Food> breakFast = MenuUtils.extractMealInfoFromRow(breakFastRow, i, MealType.BREAKFAST);
-            final Optional<Food> option1 = MenuUtils.extractMealInfoFromRow(mainRow1, i, MealType.PRINCIPAL);
-            final Optional<Food> option2 = MenuUtils.extractMealInfoFromRow(mainRow2, i, MealType.PRINCIPAL);
+            final Optional<Food> option1 = MenuUtils.extractMealInfoFromRow(mainRow1, i, MealType.MAIN1);
+            final Optional<Food> option2 = MenuUtils.extractMealInfoFromRow(mainRow2, i, MealType.MAIN2);
             final Optional<Food> antojito = MenuUtils.extractMealInfoFromRow(antojitosRow, i, MealType.ANTOJITO);
-            final Optional<Food> side1 = MenuUtils.extractMealInfoFromRow(side1Row, i, MealType.GUARNICION);
-            final Optional<Food> side2 = MenuUtils.extractMealInfoFromRow(side2Row, i, MealType.GUARNICION);
-            final Optional<Food> soupOrCream = MenuUtils.extractMealInfoFromRow(soupOrCreamRow, i, MealType.SOPA_O_CREMA);
-            final Optional<Food> dessert = MenuUtils.extractMealInfoFromRow(dessertRow, i, MealType.POSTRE);
+            final Optional<Food> side1 = MenuUtils.extractMealInfoFromRow(side1Row, i, MealType.SIDE1);
+            final Optional<Food> side2 = MenuUtils.extractMealInfoFromRow(side2Row, i, MealType.SIDE2);
+            final Optional<Food> soupOrCream = MenuUtils.extractMealInfoFromRow(soupOrCreamRow, i, MealType.SOUP_OR_CREAM);
+            final Optional<Food> dessert = MenuUtils.extractMealInfoFromRow(dessertRow, i, MealType.DESSERT);
             final Optional<Food> light = MenuUtils.extractMealInfoFromRow(lightRow, i, MealType.LIGHT);
 
             final Row[] saladRows = {saladsRow1, saladsRow2, saladsRow3};

@@ -74,13 +74,13 @@ class MenuUtilsTest {
 
         final List<Food> expectedMondayFoodAlternatives =
                 Arrays.asList(
-                        new Food("pozole", 345, MealType.PRINCIPAL),
-                        new Food("chilaquiles verdes con pollo", 350, MealType.PRINCIPAL),
+                        new Food("pozole", 345, MealType.MAIN1),
+                        new Food("chilaquiles verdes con pollo", 350, MealType.MAIN2),
                         new Food("burrito/ quesadilla", 350, MealType.ANTOJITO),
-                        new Food("fideos", 145, MealType.GUARNICION),
-                        new Food("frijoles con curtidos", 135, MealType.GUARNICION),
-                        new Food("crema de verduras", 125, MealType.SOPA_O_CREMA),
-                        new Food("arroz con leche", 268, MealType.POSTRE),
+                        new Food("fideos", 145, MealType.SIDE1),
+                        new Food("frijoles con curtidos", 135, MealType.SIDE2),
+                        new Food("crema de verduras", 125, MealType.SOUP_OR_CREAM),
+                        new Food("arroz con leche", 268, MealType.DESSERT),
                         new Food("wrap de pollo", 198, MealType.LIGHT)
                 );
 
