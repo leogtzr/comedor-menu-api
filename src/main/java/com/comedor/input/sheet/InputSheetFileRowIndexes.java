@@ -1,104 +1,58 @@
 package com.comedor.input.sheet;
 
-public enum InputSheetFileRowIndexes {
-    TITLE(4) {
-        @Override
-        public int get() {
-            return TITLE.index;
-        }
+public class InputSheetFileRowIndexes {
 
-        @Override
-        public void adjust(final int index) {
-            TITLE.index = index;
-        }
-    },
-    BREAKFAST(6) {
-        @Override public void adjust(int index) { }
+    private int titleRowPosition = 4;
 
-        @Override
-        public int get() {
-            return TITLE.index + 2;
-        }
-    },
-    MAIN1(TITLE.get() + 4) {
-        @Override public void adjust(int index) { }
-
-        @Override
-        public int get() {
-            return TITLE.get() + 4;
-        }
-    },
-    MAIN2(TITLE.get() + 5) {
-        @Override public void adjust(int index) { }
-
-        @Override
-        public int get() {
-            return TITLE.get() + 5;
-        }
-    },
-    ANTOJITO(TITLE.get() + 6) {
-        @Override public void adjust(int index) { }
-
-        @Override
-        public int get() {
-            return TITLE.get() + 6;
-        }
-    },
-    SIDE1(TITLE.get() + 8) {
-        @Override public void adjust(int index) { }
-
-        @Override
-        public int get() {
-            return TITLE.get() + 8;
-        }
-    },
-    SIDE2(TITLE.get() + 9) {
-        @Override public void adjust(int index) { }
-
-        @Override
-        public int get() {
-            return TITLE.get() + 9;
-        }
-    },
-    SOUP_OR_CREAM(TITLE.get() + 10) {
-        @Override public void adjust(int index) { }
-
-        @Override
-        public int get() {
-            return TITLE.get() + 10;
-        }
-    },
-    DESSERT(TITLE.get() + 11) {
-        @Override public void adjust(int index) { }
-
-        @Override
-        public int get() {
-            return TITLE.get() + 11;
-        }
-    },
-    LIGHT(TITLE.get() + 12) {
-        @Override public void adjust(int index) { }
-
-        @Override
-        public int get() {
-            return TITLE.get() + 12;
-        }
-    },
-    SALADS(TITLE.get() + 13) {
-        @Override public void adjust(int index) { }
-
-        @Override
-        public int get() {
-            return TITLE.get() + 13;
-        }
-    }
-    ;
-    private int index;
-
-    InputSheetFileRowIndexes(int index) {
-        this.index = index;
+    public InputSheetFileRowIndexes() {
     }
 
-    public abstract void adjust(int index);
-    public abstract int get();
+    public int title() {
+        return this.titleRowPosition;
+    }
+
+    public int breakfast() {
+        return this.titleRowPosition + 2;
+    }
+
+    public int main1() {
+        return this.titleRowPosition + 4;
+    }
+
+    public int main2() {
+        return this.titleRowPosition + 5;
+    }
+
+    public int antojito() {
+        return this.titleRowPosition + 6;
+    }
+
+    public int side1() {
+        return this.titleRowPosition + 8;
+    }
+
+    public int side2() {
+        return this.titleRowPosition + 9;
+    }
+
+    public int soupOrCream() {
+        return this.titleRowPosition + 10;
+    }
+
+    public int dessert() {
+        return this.titleRowPosition + 11;
+    }
+
+    public int light() {
+        return this.titleRowPosition + 12;
+    }
+
+    public int salads() {
+        return this.titleRowPosition + 13;
+    }
+
+    public void adjust(final int titleRowPosition) {
+        this.titleRowPosition = titleRowPosition;
+    }
+
 }

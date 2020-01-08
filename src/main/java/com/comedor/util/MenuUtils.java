@@ -78,25 +78,27 @@ public final class MenuUtils {
             return Optional.empty();
         }
 
-        titleRowPosition.ifPresent(pos -> InputSheetFileRowIndexes.TITLE.adjust(pos));
+        final InputSheetFileRowIndexes indexes = new InputSheetFileRowIndexes();
+
+        titleRowPosition.ifPresent(pos -> indexes.adjust(pos));
 
         final Menu menu = new Menu();
-        final String title = sheet.getRow(InputSheetFileRowIndexes.TITLE.get()).getCell(0).getStringCellValue();
+        final String title = sheet.getRow(indexes.title()).getCell(0).getStringCellValue();
         menu.setTitle(title);
 
-        final Row breakFastRow = sheet.getRow(InputSheetFileRowIndexes.BREAKFAST.get());
-        final Row mainRow1 = sheet.getRow(InputSheetFileRowIndexes.MAIN1.get());
-        final Row mainRow2 = sheet.getRow(InputSheetFileRowIndexes.MAIN2.get());
-        final Row antojitosRow = sheet.getRow(InputSheetFileRowIndexes.ANTOJITO.get());
-        final Row side1Row = sheet.getRow(InputSheetFileRowIndexes.SIDE1.get());
-        final Row side2Row = sheet.getRow(InputSheetFileRowIndexes.SIDE2.get());
-        final Row soupOrCreamRow = sheet.getRow(InputSheetFileRowIndexes.SOUP_OR_CREAM.get());
-        final Row dessertRow = sheet.getRow(InputSheetFileRowIndexes.DESSERT.get());
-        final Row lightRow = sheet.getRow(InputSheetFileRowIndexes.LIGHT.get());
+        final Row breakFastRow = sheet.getRow(indexes.breakfast());
+        final Row mainRow1 = sheet.getRow(indexes.main1());
+        final Row mainRow2 = sheet.getRow(indexes.main2());
+        final Row antojitosRow = sheet.getRow(indexes.antojito());
+        final Row side1Row = sheet.getRow(indexes.side1());
+        final Row side2Row = sheet.getRow(indexes.side2());
+        final Row soupOrCreamRow = sheet.getRow(indexes.soupOrCream());
+        final Row dessertRow = sheet.getRow(indexes.dessert());
+        final Row lightRow = sheet.getRow(indexes.light());
 
-        final Row saladsRow1 = sheet.getRow(InputSheetFileRowIndexes.SALADS.get());
-        final Row saladsRow2 = sheet.getRow(InputSheetFileRowIndexes.SALADS.get() + 1);
-        final Row saladsRow3 = sheet.getRow(InputSheetFileRowIndexes.SALADS.get() + 2);
+        final Row saladsRow1 = sheet.getRow(indexes.salads());
+        final Row saladsRow2 = sheet.getRow(indexes.salads() + 1);
+        final Row saladsRow3 = sheet.getRow(indexes.salads()+ 2);
 
         final Map<Day, DayMeal> dayMealMenu = new HashMap<>();
 
