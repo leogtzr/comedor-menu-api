@@ -142,6 +142,6 @@ public final class MenuUtils {
     }
 
     private MenuUtils() {}
-    
+
 }
 
