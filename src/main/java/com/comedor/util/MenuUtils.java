@@ -2,7 +2,6 @@ package com.comedor.util;
 
 import com.comedor.input.sheet.DayColumnIndexes;
 import com.comedor.input.sheet.InputSheetFileRowIndexes;
-import com.comedor.input.sheet.RowTypeIndex;
 import com.comedor.menu.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -10,6 +9,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 
 import java.util.*;
 
+import static com.comedor.menu.MealType.*;
 import static java.util.stream.Collectors.*;
 
 public final class MenuUtils {
@@ -28,7 +28,6 @@ public final class MenuUtils {
         if (cellName == null || value.trim().isEmpty()) {
             return Optional.empty();
         }
-        // System.out.println("Value is: " + value);
         final Cell cellKCal = row.getCell(index.index() + 1);
 
         final int kCal = (int)cellKCal.getNumericCellValue();
@@ -110,15 +109,15 @@ public final class MenuUtils {
             final List<Food> alternatives = new ArrayList<>();
             final DayMeal dayMeal = new DayMeal();
 
-            final Optional<Food> breakFast = MenuUtils.extractMealInfoFromRow(breakFastRow, i, MealType.BREAKFAST);
-            final Optional<Food> option1 = MenuUtils.extractMealInfoFromRow(mainRow1, i, MealType.MAIN1);
-            final Optional<Food> option2 = MenuUtils.extractMealInfoFromRow(mainRow2, i, MealType.MAIN2);
-            final Optional<Food> antojito = MenuUtils.extractMealInfoFromRow(antojitosRow, i, MealType.ANTOJITO);
-            final Optional<Food> side1 = MenuUtils.extractMealInfoFromRow(side1Row, i, MealType.SIDE1);
-            final Optional<Food> side2 = MenuUtils.extractMealInfoFromRow(side2Row, i, MealType.SIDE2);
-            final Optional<Food> soupOrCream = MenuUtils.extractMealInfoFromRow(soupOrCreamRow, i, MealType.SOUP_OR_CREAM);
-            final Optional<Food> dessert = MenuUtils.extractMealInfoFromRow(dessertRow, i, MealType.DESSERT);
-            final Optional<Food> light = MenuUtils.extractMealInfoFromRow(lightRow, i, MealType.LIGHT);
+            final Optional<Food> breakFast = MenuUtils.extractMealInfoFromRow(breakFastRow, i, BREAKFAST);
+            final Optional<Food> option1 = MenuUtils.extractMealInfoFromRow(mainRow1, i, MAIN1);
+            final Optional<Food> option2 = MenuUtils.extractMealInfoFromRow(mainRow2, i, MAIN2);
+            final Optional<Food> antojito = MenuUtils.extractMealInfoFromRow(antojitosRow, i, ANTOJITO);
+            final Optional<Food> side1 = MenuUtils.extractMealInfoFromRow(side1Row, i, SIDE1);
+            final Optional<Food> side2 = MenuUtils.extractMealInfoFromRow(side2Row, i, SIDE2);
+            final Optional<Food> soupOrCream = MenuUtils.extractMealInfoFromRow(soupOrCreamRow, i, SOUP_OR_CREAM);
+            final Optional<Food> dessert = MenuUtils.extractMealInfoFromRow(dessertRow, i, DESSERT);
+            final Optional<Food> light = MenuUtils.extractMealInfoFromRow(lightRow, i, LIGHT);
 
             breakFast.ifPresent(dayMeal::setBreakfast);
             option1.ifPresent(alternatives::add);
@@ -157,17 +156,17 @@ public final class MenuUtils {
 
         final Map<Day, List<Food>> map = new HashMap<>();
 
-        indexes.values().stream().filter(rix -> rix.getMealType() != MealType.TITLE).forEach(rix -> {
+        indexes.values().stream().filter(rix -> rix.getMealType() != TITLE).forEach(rix -> {
             final Row r = sheet.getRow(rix.getIndex());
             for (final DayColumnIndexes dayIndex : DayColumnIndexes.values()) {
-                if (rix.getMealType() == MealType.SALADS) {
+                if (rix.getMealType() == SALADS) {
                     final Row r2 = sheet.getRow(rix.getIndex() + 1);
                     final Row r3 = sheet.getRow(rix.getIndex() + 2);
                     final Row[] saladRows = {r, r2, r3};
                     final Optional<SaladBar> salads = MenuUtils.extractFromSaladsRow(saladRows, dayIndex);
                     salads.ifPresent(sl ->
                             map.computeIfAbsent(dayIndex.day(), k -> new ArrayList<>()).addAll(
-                                sl.getSalads().stream().map(salad -> new Food(salad, 0, MealType.SALADS)).collect(toList())
+                                sl.getSalads().stream().map(salad -> new Food(salad, 0, SALADS)).collect(toList())
                     ));
                 } else {
                     MenuUtils.extractMealInfoFromRow(r, dayIndex, rix.getMealType())
