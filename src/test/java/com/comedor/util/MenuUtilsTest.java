@@ -55,7 +55,7 @@ class MenuUtilsTest {
         }
 
         final Menu menu = sheetOpt.get();
-        final DayMeal menuMonday = menu.getMenu().get(Day.LUNES);
+        final DayMeal menuMonday = menu.getMenu().get(Day.MONDAY);
         final List<Food> lunchDinnerFoodAlternatives = menuMonday.getLunchDinnerFoodAlternatives();
         if (lunchDinnerFoodAlternatives == null || lunchDinnerFoodAlternatives.isEmpty()) {
             fail("lunch food alternatives should not be empty ... ");

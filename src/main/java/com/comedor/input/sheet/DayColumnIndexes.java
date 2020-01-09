@@ -5,13 +5,13 @@ import lombok.ToString;
 
 @ToString
 public enum DayColumnIndexes {
-    LUNES(2, Day.LUNES),
-    MARTES(4, Day.MARTES),
-    MIERCOLES(6, Day.MIERCOLES),
-    JUEVES(8, Day.JUEVES),
-    VIERNES(10, Day.VIERNES),
-    SABADO(12, Day.SABADO),
-    DOMINGO(14, Day.DOMINGO)
+    LUNES(2, Day.MONDAY),
+    MARTES(4, Day.TUESDAY),
+    MIERCOLES(6, Day.WEDNESDAY),
+    JUEVES(8, Day.THURSDAY),
+    VIERNES(10, Day.FRIDAY),
+    SABADO(12, Day.SATURDAY),
+    DOMINGO(14, Day.SUNDAY)
     ;
 
     private final int index;
