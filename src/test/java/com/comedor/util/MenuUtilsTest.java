@@ -18,20 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class MenuUtilsTest {
 
     @Test
-    public void alternative() throws IOException, InvalidFormatException {
-        final String path = "src/test/resources/menu.xls";
-
-        final File file = new File(path);
-        String absolutePath = file.getAbsolutePath();
-        final Workbook workbook = WorkbookFactory.create(new File(absolutePath));
-        final Sheet sheet = workbook.getSheetAt(0);
-
-        // final Optional<Menu> sheetOpt = MenuUtils.extrac(sheet);
-        MenuUtils.foo(sheet);
-        workbook.close();
-    }
-
-    // @Test
     void shouldBeAbleToParseMenuFile() throws IOException, InvalidFormatException {
         final String path = "src/test/resources/menu.xls";
 
@@ -53,7 +39,7 @@ class MenuUtilsTest {
         workbook.close();
     }
 
-    // @Test
+    @Test
     void shouldExtractMenuFromSheet1() throws IOException, InvalidFormatException {
         final String path = "src/test/resources/menu.xls";
 
@@ -62,7 +48,7 @@ class MenuUtilsTest {
         final Workbook workbook = WorkbookFactory.create(new File(absolutePath));
         final Sheet sheet = workbook.getSheetAt(0);
 
-        final Optional<Menu> sheetOpt = MenuUtils.extractMenuFromSheet(sheet);
+        final Optional<Menu> sheetOpt = MenuUtils.foo(sheet);
 
         if (sheetOpt.isEmpty()) {
             fail("should be able to parse sheet");
@@ -70,7 +56,7 @@ class MenuUtilsTest {
 
         final Menu menu = sheetOpt.get();
         final DayMeal menuMonday = menu.getMenu().get(Day.LUNES);
-        Food mondayBreakfast = menuMonday.getBreakfast();
+        // Food mondayBreakfast = menuMonday.getBreakfast();
         final List<Food> lunchDinnerFoodAlternatives = menuMonday.getLunchDinnerFoodAlternatives();
         if (lunchDinnerFoodAlternatives == null || lunchDinnerFoodAlternatives.isEmpty()) {
             fail("lunch food alternatives should not be empty ... ");
