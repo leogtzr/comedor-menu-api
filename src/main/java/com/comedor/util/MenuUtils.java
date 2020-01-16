@@ -10,6 +10,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import java.util.*;
 
 import static com.comedor.menu.MealType.*;
+import static com.comedor.util.Constants.MAX_VALUE_TO_FIND_TITLE;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.*;
 
@@ -57,7 +58,7 @@ public final class MenuUtils {
     public static Optional<Integer> titleTagPosition(final Sheet sheet) {
         int pos = 4;
 
-        for (int i = 1; i < Constants.MAX_VALUE_TO_FIND_TITLE; i++) {
+        for (int i = 1; i < MAX_VALUE_TO_FIND_TITLE; i++) {
             final Row row = sheet.getRow(i);
             if (row == null) {
                 continue;
@@ -70,7 +71,7 @@ public final class MenuUtils {
             }
         }
 
-        return pos >= Constants.MAX_VALUE_TO_FIND_TITLE ? Optional.empty() : Optional.of(pos);
+        return pos >= MAX_VALUE_TO_FIND_TITLE ? Optional.empty() : Optional.of(pos);
     }
 
     public static Optional<Menu> extractMenuFromSheet(final Sheet sheet) {

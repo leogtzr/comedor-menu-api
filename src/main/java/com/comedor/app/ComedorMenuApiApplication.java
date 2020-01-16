@@ -18,14 +18,15 @@ public class ComedorMenuApiApplication {
 		// SpringApplication.run(ComedorMenuApiApplication.class, args);
 
 		// Creating a Workbook from an Excel file (.xls or .xlsx)
-		final Workbook workbook = WorkbookFactory.create(new File(args[0]));
+		try (final Workbook workbook = WorkbookFactory.create(new File(args[0]))) {
+			final Sheet sheet = workbook.getSheetAt(2);
 
-		final Sheet sheet = workbook.getSheetAt(2);
-
-		final Optional<Menu> menu = MenuUtils.extractMenuFromSheet(sheet);
-		System.out.println(menu);
-
-		workbook.close();
+			final Optional<Menu> menu = MenuUtils.extractMenuFromSheet(sheet);
+			menu.ifPresent(mn -> {
+				final DayMeal mondayMeal = mn.getMenu().get(Day.MONDAY);
+				System.out.println(mondayMeal.getBreakfast());
+			});
+		}
 
 	}
 
