@@ -65,7 +65,7 @@ public final class MenuUtils {
             }
             final Cell cell = row.getCell(0);
             final String value = cell.getStringCellValue();
-            if (value.contains("MENU SEMANAL DEL") || value.contains("MENUS")) {
+            if (value.contains("MENU SEMANAL DEL") || value.contains("MENUS") || value.contains("MENU DEL")) {
                 pos = i;
                 break;
             }
