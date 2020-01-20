@@ -1,7 +1,5 @@
 package com.comedor.app;
 
-import com.comedor.input.sheet.DayColumnIndexes;
-import com.comedor.input.sheet.InputSheetFileRowIndexes;
 import com.comedor.menu.*;
 import com.comedor.util.MenuUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
