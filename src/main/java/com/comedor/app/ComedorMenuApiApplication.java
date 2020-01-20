@@ -9,11 +9,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-// @SpringBootApplication
 public class ComedorMenuApiApplication {
 
 	public static void main(final String[] args) throws IOException, InvalidFormatException {
-		// SpringApplication.run(ComedorMenuApiApplication.class, args);
 
 		// Creating a Workbook from an Excel file (.xls or .xlsx)
 		try (final Workbook workbook = WorkbookFactory.create(new File(args[0]))) {
