@@ -11,6 +11,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import java.util.*;
 
 import static com.comedor.menu.MealType.*;
+import static com.comedor.util.Constants.DEFAULT_TITLE_ROW_INDEX_POSITION;
 import static com.comedor.util.Constants.MAX_VALUE_TO_FIND_TITLE;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.*;
@@ -66,7 +67,7 @@ public final class MenuUtils {
     }
 
     private static Optional<Integer> titleTagPosition(final Sheet sheet) {
-        int pos = 4;
+        int pos = DEFAULT_TITLE_ROW_INDEX_POSITION;
 
         for (int i = 1; i < MAX_VALUE_TO_FIND_TITLE; i++) {
             final Row row = sheet.getRow(i);
