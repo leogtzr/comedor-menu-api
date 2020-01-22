@@ -2,6 +2,7 @@ package com.comedor.util;
 
 import com.comedor.input.sheet.DayColumnIndexes;
 import com.comedor.input.sheet.InputSheetFileRowIndexes;
+import com.comedor.input.sheet.RowTypeIndex;
 import com.comedor.menu.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -38,7 +39,16 @@ public final class MenuUtils {
         return Optional.of(food);
     }
 
-    public static Optional<SaladBar> extractFromSaladsRow(final Row[] saladsRows, final DayColumnIndexes dayIndex) {
+    private static Optional<SaladBar> extractFromSaladsRow(
+            final Sheet sheet
+            , final DayColumnIndexes dayIndex
+    , final RowTypeIndex rix) {
+
+        final Row r = sheet.getRow(rix.getIndex());
+        final Row r2 = sheet.getRow(rix.getIndex() + 1);
+        final Row r3 = sheet.getRow(rix.getIndex() + 2);
+        final Row[] saladsRows = {r, r2, r3};
+
         final Cell salads1 = saladsRows[0].getCell(dayIndex.index());
         final Cell salads2 = saladsRows[1].getCell(dayIndex.index());
         final Cell salads3 = saladsRows[2].getCell(dayIndex.index());
@@ -55,7 +65,7 @@ public final class MenuUtils {
         return Optional.empty();
     }
 
-    public static Optional<Integer> titleTagPosition(final Sheet sheet) {
+    private static Optional<Integer> titleTagPosition(final Sheet sheet) {
         int pos = 4;
 
         for (int i = 1; i < MAX_VALUE_TO_FIND_TITLE; i++) {
@@ -97,7 +107,7 @@ public final class MenuUtils {
                     final Row r2 = sheet.getRow(rix.getIndex() + 1);
                     final Row r3 = sheet.getRow(rix.getIndex() + 2);
                     final Row[] saladRows = {r, r2, r3};
-                    final Optional<SaladBar> salads = MenuUtils.extractFromSaladsRow(saladRows, dayIndex);
+                    final Optional<SaladBar> salads = extractFromSaladsRow(sheet, dayIndex, rix);
                     salads.ifPresent(sl ->
                             map.computeIfAbsent(dayIndex.day(), k -> new ArrayList<>()).addAll(
                                     sl.getSalads().stream().map(salad -> new Food(salad, 0, SALADS)).collect(toList())
