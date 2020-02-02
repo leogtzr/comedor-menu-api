@@ -18,7 +18,7 @@ import static java.util.stream.Collectors.*;
 
 public final class MenuUtils {
 
-    public static Optional<Food> extractMealInfoFromRow(
+    private static Optional<Food> extractMealInfoFromRow(
             final Row row,
             final DayColumnIndexes index,
             final MealType mealType
