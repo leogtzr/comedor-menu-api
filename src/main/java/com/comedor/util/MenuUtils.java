@@ -4,10 +4,11 @@ import com.comedor.input.sheet.DayColumnIndexes;
 import com.comedor.input.sheet.InputSheetFileRowIndexes;
 import com.comedor.input.sheet.RowTypeIndex;
 import com.comedor.menu.*;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 import static com.comedor.menu.MealType.*;
@@ -155,5 +156,19 @@ public final class MenuUtils {
 
     private MenuUtils() {}
 
+    public static List<Menu> extractMenuFromFile(final String path) throws IOException, InvalidFormatException {
+        final List<Menu> menus = new ArrayList<>();
+
+        try (final Workbook workbook = WorkbookFactory.create(new File(path))) {
+            final int numberOfSheets = workbook.getNumberOfSheets();
+            for (int i = 0; i < numberOfSheets; i++) {
+                final Sheet sheet = workbook.getSheetAt(i);
+                final Optional<Menu> menu = extractMenuFromSheet(sheet);
+                menu.ifPresent(menus::add);
+            }
+        }
+
+        return menus;
+    }
 }
 
