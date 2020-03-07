@@ -18,7 +18,7 @@ menu.ifPresent(m -> {
 
 ## Getting day menu
 ```java
-DayMeal menuMonday = menu.getMenu().get(Day.LUNES);
+DayMeal menuMonday = menu.getMenu().get(Day.MONDAY);
 List<String> mondaySalads = menuMonday.getSalads();
 Food mondayBreakfast = menuMonday.getBreakfast();
 
