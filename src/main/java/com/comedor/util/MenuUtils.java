@@ -100,7 +100,7 @@ public final class MenuUtils {
         final String title = sheet.getRow(indexes.title().getIndex()).getCell(0).getStringCellValue();
         menu.setTitle(title);
 
-        final Map<Day, List<Food>> map = new HashMap<>();
+        final Map<Day, List<Food>> map = new TreeMap<>();
 
         indexes.values().stream().filter(rix -> rix.getMealType() != TITLE).forEach(rix -> {
             final Row r = sheet.getRow(rix.getIndex());
@@ -108,7 +108,6 @@ public final class MenuUtils {
                 if (rix.getMealType() == SALADS) {
                     final Row r2 = sheet.getRow(rix.getIndex() + 1);
                     final Row r3 = sheet.getRow(rix.getIndex() + 2);
-                    final Row[] saladRows = {r, r2, r3};
                     final Optional<SaladBar> salads = extractFromSaladsRow(sheet, dayIndex, rix);
                     salads.ifPresent(sl ->
                             map.computeIfAbsent(dayIndex.day(), k -> new ArrayList<>()).addAll(
@@ -121,7 +120,7 @@ public final class MenuUtils {
             }
         });
 
-        final Map<Day, DayMeal> dayMenu = new HashMap<>();
+        final Map<Day, DayMeal> dayMenu = new TreeMap<>();
         Arrays.stream(Day.values()).forEach(day -> dayMenu.put(day, toDayMeal(map, day)));
 
         menu.setMenu(dayMenu);

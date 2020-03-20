@@ -43,6 +43,9 @@ class MenuUtilsTest {
                 if (sheetOpt.isEmpty()) {
                     fail(String.format("Should have parsed: %s", sheetName));
                 }
+                sheetOpt.ifPresent(menu -> {
+
+                });
             }
         }
 
